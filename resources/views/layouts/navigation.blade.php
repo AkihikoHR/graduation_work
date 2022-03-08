@@ -28,6 +28,13 @@
             {{ __('Create') }}
           </x-nav-link>
         </div>
+        <!-- 🔽 テストページへのリンクを追加 -->
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+          <x-nav-link :href="route('test')" :active="request()->routeIs('test')">
+            {{ __('Test') }}
+          </x-nav-link>
+        </div>
+
       </div>
 
       <!-- Settings Dropdown -->

@@ -13,14 +13,22 @@ use App\Http\Controllers\TweetController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::resource('tweet', TweetController::class);
+Route::group(['middleware' => 'auth'], function () {
+  Route::resource('tweet', TweetController::class);
+});
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('top');
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+
+Route::get('/test', function () {
+    return view('test');
+})->middleware(['auth'])->name('test');
+
 
 require __DIR__.'/auth.php';
