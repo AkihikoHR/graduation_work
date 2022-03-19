@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
-use App\Models\Tweet;
+use App\Models\Group;
+use App\Models\User;
+use App\Models\Post;
 use Auth;
 
-class TweetController extends Controller
+class GroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +18,12 @@ class TweetController extends Controller
      */
     public function index()
     {
-       $tweets = Tweet::getAllOrderByUpdated_at();
-       return  view('tweet.index', [
-       'tweets' => $tweets,
-       ]);
+      $groups = Group::getAllOrderByUpdated_at();
+      return view('group.index', [
+      'groups' => $groups,
+      ]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -29,9 +31,8 @@ class TweetController extends Controller
      */
     public function create()
     {
-        return view('tweet.create');
+        return view('group.create');
     }
-    
 
     /**
      * Store a newly created resource in storage.
@@ -41,25 +42,26 @@ class TweetController extends Controller
      */
     public function store(Request $request)
     {
-       // バリデーション
+           // バリデーション
       $validator = Validator::make($request->all(), [
-        'tweet' => 'required | max:191',
+        'name' => 'required | max:100',
         'description' => 'required',
+        'condition' => 'required',
+        'end_date' => 'required',
       ]);
       // バリデーション:エラー
       if ($validator->fails()) {
         return redirect()
-          ->route('tweet.create')
+          ->route('gourp.create')
           ->withInput()
           ->withErrors($validator);
       }
       // create()は最初から用意されている関数
       // 戻り値は挿入されたレコードの情報
       $data = $request->merge(['user_id' => Auth::user()->id])->all();
-      $result = Tweet::create($data);
-     
-      // ルーティング「tweet.index」にリクエスト送信（一覧ページに移動）
-      return redirect()->route('tweet.index');
+      $result = Group::create($data);
+      // ルーティング「group.index」にリクエスト送信（一覧ページに移動）
+      return redirect()->route('group.index');
     }
 
     /**
@@ -70,8 +72,8 @@ class TweetController extends Controller
      */
     public function show($id)
     {
-         $tweet = Tweet::find($id);
-         return view('tweet.show', ['tweet' => $tweet]);
+         $group = Group::find($id);
+         return view('group.show', ['group' => $group]);
     }
 
     /**
@@ -82,8 +84,8 @@ class TweetController extends Controller
      */
     public function edit($id)
     {
-           $tweet = Tweet::find($id);
-           return view('tweet.edit', ['tweet' => $tweet]);
+         $group = Group::find($id);
+         return view('group.edit', ['group' => $group]);
     }
 
     /**
@@ -96,20 +98,22 @@ class TweetController extends Controller
     public function update(Request $request, $id)
     {
           //バリデーション
-          $validator = Validator::make($request->all(), [
-            'tweet' => 'required | max:191',
+           $validator = Validator::make($request->all(), [
+            'name' => 'required | max:100',
             'description' => 'required',
+            'condition' => 'required',
+            'end_date' => 'required',
           ]);
           //バリデーション:エラー
           if ($validator->fails()) {
             return redirect()
-              ->route('tweet.edit', $id)
+              ->route('group.edit', $id)
               ->withInput()
               ->withErrors($validator);
           }
           //データ更新処理
-          $result = Tweet::find($id)->update($request->all());
-          return redirect()->route('tweet.index');
+          $result = Group::find($id)->update($request->all());
+          return redirect()->route('group.index');
     }
 
     /**
@@ -120,7 +124,44 @@ class TweetController extends Controller
      */
     public function destroy($id)
     {
-         $result = Tweet::find($id)->delete();
-         return redirect()->route('tweet.index');
+         $result = Group::find($id)->delete();
+         return redirect()->route('group.index');
     }
+    
+    public function ownerdata()
+    {
+    // Userモデルに定義した関数を実行する．
+    $user_id = Auth::user()->id;
+    $groups = User::find($user_id)->ownergroups;
+    
+    return view('group.index', [
+      'groups' => $groups
+      ]);
+    }
+    
+    public function mydata()
+    {
+    // Userモデルに定義した関数を実行する．
+    $user_id = Auth::user()->id;
+    $groups = User::find($user_id)->mygroups;
+
+      return view('group.mygroup', [
+      'groups' => $groups
+      ]);
+    
+    }
+    
+    public function room($id)
+    {
+         $group = Group::find($id);
+         $posts = Group::find($id)->group_posts;
+         return view('group.room',[
+           'group' => $group,
+           'posts' => $posts,
+           ]);
+    }
+    
 }
+
+
+

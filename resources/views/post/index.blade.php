@@ -1,9 +1,9 @@
-<!-- resources/views/tweet/index.blade.php -->
+<!-- resources/views/post/index.blade.php -->
 
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ __('Tweet Index') }}
+      {{ __('Post Index') }}
     </h2>
   </x-slot>
 
@@ -11,6 +11,7 @@
     <div class="max-w-7xl mx-auto sm:w-10/12 md:w-8/10 lg:w-8/12">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
+          
           <table class="text-center w-full border-collapse">
             <thead>
               <tr>
@@ -18,15 +19,15 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($tweets as $tweet)
+              @foreach ($posts as $post)
               <tr class="hover:bg-grey-lighter">
                 <td class="py-4 px-6 border-b border-grey-light">
-                  <a href="{{ route('tweet.show',$tweet->id) }}">
-                    <h3 class="text-left font-bold text-lg text-grey-dark">{{$tweet->tweet}}</h3>
+                  <a href="{{ route('post.show',$post->id) }}">
+                    <h3 class="text-left font-bold text-lg text-grey-dark">{{$post->post}}</h3>
                   </a>
                   <div class="flex">
                     <!-- 更新ボタン -->
-                     <form action="{{ route('tweet.edit',$tweet->id) }}" method="GET" class="text-left">
+                     <form action="{{ route('post.edit',$post->id) }}" method="GET" class="text-left">
                       @csrf
                       <button type="submit" class="mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-white py-1 px-2 focus:outline-none focus:shadow-outline">
                         <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="black">
@@ -36,7 +37,7 @@
                     </form>
                     
                     <!-- 削除ボタン -->
-                    <form action="{{ route('tweet.destroy',$tweet->id) }}" method="POST" class="text-left">
+                    <form action="{{ route('post.destroy',$post->id) }}" method="POST" class="text-left">
                       @method('delete')
                       @csrf
                       <button type="submit" class="mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-white py-1 px-2 focus:outline-none focus:shadow-outline">

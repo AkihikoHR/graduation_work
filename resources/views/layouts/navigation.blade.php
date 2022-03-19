@@ -1,3 +1,5 @@
+<!-- resources/views/layouts/navigation.blade.php -->
+
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
   <!-- Primary Navigation Menu -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,27 +13,35 @@
         </div>
 
         <!-- Navigation Links -->
+        <!-- 🔽マイページへのリンクを追加 -->
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-          <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-            {{ __('Dashboard') }}
+          <x-nav-link :href="route('mypage.index')" :active="request()->routeIs('mypage.index')">
+            {{ __('マイページ') }}
           </x-nav-link>
         </div>
-        <!-- 🔽 一覧ページへのリンクを追加 -->
+        <!-- 🔽 グループ活動ページへのリンクを追加 -->
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-          <x-nav-link :href="route('tweet.index')" :active="request()->routeIs('tweet.index')">
-            {{ __('Index') }}
+          <x-nav-link :href="route('group.mygroup')" :active="request()->routeIs('group.mygroup')">
+            {{ __('参加中のグループ') }}
           </x-nav-link>
         </div>
-        <!-- 🔽 作成ページへのリンクを追加 -->
+        <!-- 🔽 グループ一覧ページへのリンクを追加 -->
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-          <x-nav-link :href="route('tweet.create')" :active="request()->routeIs('tweet.create')">
-            {{ __('Create') }}
+          <x-nav-link :href="route('group.index')" :active="request()->routeIs('group.index')">
+            {{ __('学習グループを探す') }}
           </x-nav-link>
         </div>
-        <!-- 🔽 テストページへのリンクを追加 -->
+        <!-- 🔽 グループ作成ページへのリンクを追加 -->
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-          <x-nav-link :href="route('test')" :active="request()->routeIs('test')">
-            {{ __('Test') }}
+          <x-nav-link :href="route('group.create')" :active="request()->routeIs('group.create')">
+            {{ __('学習グループを募集する') }}
+          </x-nav-link>
+        </div>
+        
+        <!-- 🔽 マイページへのリンクを追加 -->
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+          <x-nav-link :href="route('group.ownergroup')" :active="request()->routeIs('group.ownergroup')">
+            {{ __('グループ管理') }}
           </x-nav-link>
         </div>
 
@@ -87,13 +97,13 @@
     </div>
     <!-- 🔽 一覧ページへのリンクを追加 -->
     <div class="pt-2 pb-3 space-y-1">
-      <x-responsive-nav-link :href="route('tweet.index')" :active="request()->routeIs('tweet.index')">
+      <x-responsive-nav-link :href="route('post.index')" :active="request()->routeIs('post.index')">
         {{ __('Index') }}
       </x-responsive-nav-link>
     </div>
     <!-- 🔽 作成ページへのリンクを追加 -->
     <div class="pt-2 pb-3 space-y-1">
-      <x-responsive-nav-link :href="route('tweet.create')" :active="request()->routeIs('tweet.create')">
+      <x-responsive-nav-link :href="route('post.create')" :active="request()->routeIs('post.create')">
         {{ __('Create') }}
       </x-responsive-nav-link>
     </div>
