@@ -56,11 +56,12 @@ class PostController extends Controller
       // create()は最初から用意されている関数
       // 戻り値は挿入されたレコードの情報
       
+      $group_id = $request->group_id;
       $data = $request->merge(['user_id' => Auth::user()->id])->all();
       $result = Post::create($data);
      
       // ルーティング「tweet.index」にリクエスト送信（一覧ページに移動）
-      return redirect()->route('group.mygroup');
+      return redirect()->route('group.room',$group_id);
     }
 
     /**

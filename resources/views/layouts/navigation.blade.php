@@ -15,8 +15,8 @@
         <!-- Navigation Links -->
         <!-- 🔽マイページへのリンクを追加 -->
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-          <x-nav-link :href="route('mypage.index')" :active="request()->routeIs('mypage.index')">
-            {{ __('マイページ') }}
+          <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            {{ __('ダッシュボード') }}
           </x-nav-link>
         </div>
         <!-- 🔽 グループ活動ページへのリンクを追加 -->
@@ -37,10 +37,9 @@
             {{ __('学習グループを募集する') }}
           </x-nav-link>
         </div>
-        
-        <!-- 🔽 マイページへのリンクを追加 -->
+        <!-- 🔽 グループ管理へのリンクを追加 -->
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-          <x-nav-link :href="route('group.ownergroup')" :active="request()->routeIs('group.ownergroup')">
+          <x-nav-link :href="route('group.admin')" :active="request()->routeIs('group.admin')">
             {{ __('グループ管理') }}
           </x-nav-link>
         </div>
@@ -64,12 +63,25 @@
 
           <x-slot name="content">
             <!-- Authentication -->
+            <form method="GET" action="{{ route('mypage.index') }}">
+              @csrf
+              <x-dropdown-link :href="route('mypage.index')" onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                {{ __('マイページ') }}
+              </x-dropdown-link>
+            </form>
+            <form method="GET" action="{{ route('mypage.profile') }}">
+              @csrf
+              <x-dropdown-link :href="route('mypage.profile')" onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                {{ __('プロフィール登録') }}
+              </x-dropdown-link>
+            </form>
             <form method="POST" action="{{ route('logout') }}">
               @csrf
-
               <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                {{ __('Logout') }}
+                {{ __('ログアウト') }}
               </x-dropdown-link>
             </form>
           </x-slot>
@@ -92,21 +104,34 @@
   <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
     <div class="pt-2 pb-3 space-y-1">
       <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-        {{ __('Dashboard') }}
+        {{ __('ダッシュボード') }}
       </x-responsive-nav-link>
     </div>
-    <!-- 🔽 一覧ページへのリンクを追加 -->
+    <!-- 🔽 グループ活動ページへのリンクを追加 -->
     <div class="pt-2 pb-3 space-y-1">
-      <x-responsive-nav-link :href="route('post.index')" :active="request()->routeIs('post.index')">
-        {{ __('Index') }}
+      <x-responsive-nav-link :href="route('group.mygroup')" :active="request()->routeIs('group.mygroup')">
+        {{ __('参加中のグループ') }}
       </x-responsive-nav-link>
     </div>
-    <!-- 🔽 作成ページへのリンクを追加 -->
+    <!-- 🔽 グループ一覧ページへのリンクを追加 -->
     <div class="pt-2 pb-3 space-y-1">
-      <x-responsive-nav-link :href="route('post.create')" :active="request()->routeIs('post.create')">
-        {{ __('Create') }}
+      <x-responsive-nav-link :href="route('group.index')" :active="request()->routeIs('group.index')">
+        {{ __('学習グループを探す') }}
       </x-responsive-nav-link>
     </div>
+    <!-- 🔽 グループ作成ページへのリンクを追加 -->
+    <div class="pt-2 pb-3 space-y-1">
+      <x-responsive-nav-link :href="route('group.create')" :active="request()->routeIs('group.create')">
+        {{ __('学習グループを募集する') }}
+      </x-responsive-nav-link>
+    </div>
+    <!-- 🔽 グループ管理ページへのリンクを追加 -->
+    <div class="pt-2 pb-3 space-y-1">
+      <x-responsive-nav-link :href="route('group.admin')" :active="request()->routeIs('group.admin')">
+        {{ __('グループ管理') }}
+      </x-responsive-nav-link>
+    </div>
+
 
     <!-- Responsive Settings Options -->
     <div class="pt-4 pb-1 border-t border-gray-200">
@@ -125,12 +150,25 @@
 
       <div class="mt-3 space-y-1">
         <!-- Authentication -->
+        <form method="POST" action="{{ route('mypage.index') }}">
+          @csrf
+          <x-responsive-nav-link :href="route('mypage.index')" onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+            {{ __('マイページ') }}
+          </x-responsive-nav-link>
+        </form>
+        <form method="POST" action="{{ route('mypage.profile') }}">
+          @csrf
+          <x-responsive-nav-link :href="route('mypage.profile')" onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+            {{ __('プロフィール登録') }}
+          </x-responsive-nav-link>
+        </form>        
         <form method="POST" action="{{ route('logout') }}">
           @csrf
-
           <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
-            {{ __('Logout') }}
+            {{ __('ログアウト') }}
           </x-responsive-nav-link>
         </form>
       </div>

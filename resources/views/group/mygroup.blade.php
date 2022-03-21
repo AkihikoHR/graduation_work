@@ -3,7 +3,7 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ __('Group Index') }}
+      {{ __('参加中のグループ') }}
     </h2>
   </x-slot>
 
@@ -17,30 +17,37 @@
                 <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-lg text-grey-dark border-b border-grey-light">参加中のグループ</th>
               </tr>
             </thead>
+            
             <tbody>
               @foreach ($groups as $group)
               <tr class="hover:bg-grey-lighter">
-                <td class="py-4 px-6 border-b border-grey-light">
+                <td class="py-4 px-6 border-b border-grey-light flex">
+                  <!-- <img src='' height='150px' alt='sample'>  -->
                   <a href="{{ route('group.show',$group->id) }}">
-                     <p class="text-left text-grey-dark">管理者：{{$group->user->name}}</p>
-                    <h3 class="text-left font-bold text-lg text-grey-dark">{{$group->name}}</h3>
+                  
+                   @if ($group->user_id === Auth::user()->id)
+                   <p class="text-left text-red-600">管理しています</p>
+                   @else
+                   <p class="text-left text-grey-dark">管理人：{{$group->user->name}}</p>
+                   @endif
+                    
+                   <h3 class="text-left font-bold text-lg text-grey-dark">{{$group->name}}</h3>
                   </a>
                   
                   <div class="flex">
                     <!-- グループに入室するボタン -->
                       <form action="{{ route('group.room',$group->id) }}" method="GET" class="text-left">
                         @csrf
-                         <button type="submit" class="m-4 w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                         <button type="submit" class="ml-4 w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                          入室する
                          </button>
                       </form>
                   </div>
-                  
-                  
                 </td>
               </tr>
               @endforeach
             </tbody>
+  
           </table>
         </div>
       </div>

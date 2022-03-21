@@ -60,8 +60,10 @@ class GroupController extends Controller
       // 戻り値は挿入されたレコードの情報
       $data = $request->merge(['user_id' => Auth::user()->id])->all();
       $result = Group::create($data);
+      $group = $result->id;
       // ルーティング「group.index」にリクエスト送信（一覧ページに移動）
-      return redirect()->route('group.index');
+      return redirect()->route('join', ['group' => $group]);
+      
     }
 
     /**
@@ -73,7 +75,14 @@ class GroupController extends Controller
     public function show($id)
     {
          $group = Group::find($id);
-         return view('group.show', ['group' => $group]);
+         $members = $group->users;
+         $data = $members->where('id',Auth::user()->id)->first();
+         
+         if ($data === null){
+             return view('group.show', ['group' => $group]);
+         } else {
+             return view('group.show-joined', ['group' => $group]); 
+         }
     }
 
     /**
@@ -113,7 +122,7 @@ class GroupController extends Controller
           }
           //データ更新処理
           $result = Group::find($id)->update($request->all());
-          return redirect()->route('group.index');
+          return redirect()->route('group.admin');
     }
 
     /**
@@ -125,21 +134,21 @@ class GroupController extends Controller
     public function destroy($id)
     {
          $result = Group::find($id)->delete();
-         return redirect()->route('group.index');
+         return redirect()->route('group.admin');
     }
     
-    public function ownerdata()
+    public function admin()
     {
     // Userモデルに定義した関数を実行する．
     $user_id = Auth::user()->id;
-    $groups = User::find($user_id)->ownergroups;
+    $groups = User::find($user_id)->admin;
     
-    return view('group.index', [
+    return view('group.admin', [
       'groups' => $groups
       ]);
     }
     
-    public function mydata()
+    public function mygroup()
     {
     // Userモデルに定義した関数を実行する．
     $user_id = Auth::user()->id;
@@ -155,9 +164,11 @@ class GroupController extends Controller
     {
          $group = Group::find($id);
          $posts = Group::find($id)->group_posts;
+         $members = Group::find($id)->users;
          return view('group.room',[
            'group' => $group,
            'posts' => $posts,
+           'members' => $members
            ]);
     }
     

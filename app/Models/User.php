@@ -43,7 +43,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
-    public function ownergroups()
+    public function admin()
     {
      return $this->hasMany(Group::class)->orderBy('updated_at', 'desc');
     }

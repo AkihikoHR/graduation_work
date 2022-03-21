@@ -3,7 +3,7 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ __('Create New Group') }}
+      {{ __('グループを募集する') }}
     </h2>
   </x-slot>
 
@@ -15,7 +15,7 @@
           <form class="mb-6" action="{{ route('group.store') }}" method="POST">
             @csrf
             <div class="flex flex-col mb-4">
-              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="tweet">グループ名</label>
+              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="name">グループ名</label>
               <input class="border py-2 px-3 text-grey-darkest" type="text" name="name" id="name">
             </div>
             <div class="flex flex-col mb-4">
@@ -23,11 +23,11 @@
               <input class="border py-2 px-3 text-grey-darkest" type="text" name="description" id="description">
             </div>
             <div class="flex flex-col mb-4">
-              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="tweet">募集条件</label>
+              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="condition">募集条件</label>
               <input class="border py-2 px-3 text-grey-darkest" type="text" name="condition" id="condition">
             </div>
             <div class="flex flex-col mb-4">
-              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="tweet">解散日</label>
+              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="end_date">活動終了日</label>
               <input class="border py-2 px-3 text-grey-darkest" type="date" name="end_date" id="end_date">
             </div>
             <button type="submit" class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">

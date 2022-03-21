@@ -16,7 +16,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+     //
     }
 
     /**
@@ -38,7 +38,7 @@ class MemberController extends Controller
     public function store(Group $group)
     {
         $group->users()->attach(Auth::id());
-        return redirect()->route('group.index');
+        return redirect()->route('group.mygroup');
     }
 
     /**
@@ -84,7 +84,7 @@ class MemberController extends Controller
     public function destroy(Group $group)
     {
         $group->users()->detach(Auth::id());
-        return redirect()->route('group.index');
+        return redirect()->route('group.mygroup');
     }
     
 }

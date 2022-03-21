@@ -1,4 +1,4 @@
-<!-- resources/views/group/show.blade.php -->
+<!-- resources/views/group/show-joined.blade.php -->
 
 <x-app-layout>
   <x-slot name="header">
@@ -43,12 +43,9 @@
               </p>
             </div>
             
-            <form action="{{ route('join',$group) }}" method="GET" class="text-left">
-               @csrf
-               <button type="submit" class="w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                 参加する
-               </button>
-            </form>
+            <p class="w-full text-center bg-blue-500 text-white font-semibold py-2 px-4 border border-blue-500 rounded">
+                すでに参加しています
+            </p>
             
             <a href="{{ route('group.index') }}" class="block text-center w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
               Back
