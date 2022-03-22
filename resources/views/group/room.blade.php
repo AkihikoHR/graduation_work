@@ -3,7 +3,12 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ __('グループの部屋') }}
+       @if ($group->user_id === Auth::user()->id)
+           {{$group->name}}{{__('の部屋') }}<span class="text-red-600">（管理しています）</span>
+       @else
+           {{$group->name}}{{__('の部屋') }}
+       @endif
+     
     </h2>
   </x-slot>
 
@@ -22,20 +27,37 @@
               @foreach ($posts as $post)
               <tr class="hover:bg-grey-lighter">
                 <td class="py-4 px-6 border-b border-grey-light">
-                    @if ($group->user_id === Auth::user()->id)
+                    @if ($post->user_id === Auth::user()->id)
                      <p class="text-left text-red-600">あなたの投稿です</p>
                     @else
                      <p class="text-left text-grey-dark">投稿者：{{$post->user->name}}</p>
                     @endif
                     <h3 class="text-left font-bold text-lg text-grey-dark">{{$post->post}}</h3>
                     <h3 class="text-left text-lg text-grey-dark">{{$post->description}}</h3>
+            
+                    <div class="flex">
+                       <!-- 🔽 条件分岐でログインしているユーザが投稿したpostのみ削除ボタンが表示される -->
+                       @if ($post->user_id === Auth::user()->id || $group->user_id === Auth::user()->id)
+                       <!-- 削除ボタン -->
+                       <form action="{{ route('post.destroy',$post->id) }}" method="POST" class="text-left">
+                          @method('delete')
+                          @csrf
+                          <button type="submit" class="mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-white py-1 px-2 focus:outline-none focus:shadow-outline">
+                            <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="black">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </button>
+                        </form>
+                       @endif
+                    </div>
+            
                 </td>
               </tr>
               @endforeach
             </tbody>
           </table>
-          
-          <div class="bg-white">
+     
+          <div class="mt-5 bg-white max-w-7xl mx-auto sm:w-10/12 md:w-8/12 lg:w-6/12">
           @include('common.errors')
             <h1 class="text-center py-6 px-6 bg-grey-lightest font-bold uppercase text-lg text-grey-dark">学んだことを投稿する</h1>
             <form class="mb-6" action="{{ route('post.store') }}" method="POST">
@@ -52,56 +74,16 @@
                 <input type="hidden" name="group_id" value="{{$group->id}}">
               </div>
               <button type="submit" class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
-                Create
+                投稿する
               </button>
             </form>
           </div>
             
-          <div class="mb-6">
-            <div class="flex flex-col mb-4">
-              <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">グループ名</p>
-              <p class="py-2 px-3 text-grey-darkest" id="name">
-                {{$group->name}}
-              </p>
-            </div>
-            <div class="flex flex-col mb-4">
-              <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">グループの説明</p>
-              <p class="py-2 px-3 text-grey-darkest" id="description">
-                {{$group->description}}
-              </p>
-            </div>
-            <div class="flex flex-col mb-4">
-              <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">グループの募集条件</p>
-              <p class="py-2 px-3 text-grey-darkest" id="condition">
-                {{$group->condition}}
-              </p>
-            </div>
-            <div class="flex flex-col mb-4">
-              <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">グループの活動終了日</p>
-              <p class="py-2 px-3 text-grey-darkest" id="end_date">
-                {{$group->end_date}}
-              </p>
-            </div>
-            
-            <table class="text-center w-full border-collapse">
-            <thead>
-              <tr>
-                <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-lg text-grey-dark border-b border-grey-light">グループメンバー（{{ $group->users()->count() }}人）</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($members as $member)
-              <tr class="hover:bg-grey-lighter">
-                <td class="py-4 px-6 border-b border-grey-light">
-                  <h3 class="text-left text-lg text-grey-dark">{{$member->name}}</h3>
-                </td>
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-            
-    
-            <a href="{{ route('group.mygroup') }}" class="block text-center w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
+          <div class="my-20">
+            <a href="{{ route('group.show',$group->id) }}" class="block text-center max-w-7xl mx-auto sm:w-10/12 md:w-8/12 lg:w-6/12 py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
+              グループの詳細
+            </a>
+            <a href="{{ route('group.mygroup') }}" class="block text-center max-w-7xl mx-auto sm:w-10/12 md:w-8/12 lg:w-6/12 py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
               Back
             </a>
           </div>

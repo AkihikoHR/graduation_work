@@ -10,7 +10,7 @@
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
           @include('common.errors')
-          <form class="mb-6" action="{{ route('group.store') }}" method="POST">
+          <form class="mb-6" action="{{ route('profile.store') }}" method="POST">
             @csrf
             <div class="flex flex-col mb-4">
               <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="nickname">ニックネーム（公開されます）</label>
@@ -38,11 +38,12 @@
                 <option value="大学2年生">大学2年生</option>
                 <option value="大学3年生">大学3年生</option>
                 <option value="大学4年生">大学4年生</option>
+                <option value="その他">その他</option>
               </select>
             </div>
             <div class="flex flex-col mb-4">
-              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="pref_name">お住まいの都道府県（公開されます）</label>
-              <select name="pref_name">
+              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="pref">お住まいの都道府県（公開されます）</label>
+              <select name="pref">
                 <option value="" selected>都道府県</option>
                 <option value="北海道">北海道</option>
                 <option value="青森県">青森県</option>
@@ -91,11 +92,12 @@
                 <option value="宮崎県">宮崎県</option>
                 <option value="鹿児島県">鹿児島県</option>
                 <option value="沖縄県">沖縄県</option>
+                <option value="その他">その他</option>
               </select>
             </div>
             <div class="flex flex-col mb-4">
-              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="photo">プロフィール画像（公開されます）</label>
-              <input class="border py-2 px-3 text-grey-darkest" type="file" name="photo" id="photo">
+              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="image">プロフィール画像（公開されます）</label>
+              <input class="border py-2 px-3 text-grey-darkest" type="file" name="image" id="image">
             </div>
 
             <button type="submit" class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">

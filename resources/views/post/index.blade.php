@@ -21,7 +21,7 @@
             <tbody>
               @foreach ($posts as $post)
               <tr class="hover:bg-grey-lighter">
-                <td class="py-4 px-6 border-b border-grey-light">
+                <td class="py-4 px-6 border-b border-grey-light flex">
                   <a href="{{ route('post.show',$post->id) }}">
                     <h3 class="text-left font-bold text-lg text-grey-dark">{{$post->post}}</h3>
                   </a>

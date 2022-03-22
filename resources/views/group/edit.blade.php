@@ -21,14 +21,14 @@
             </div>
             <div class="flex flex-col mb-4">
               <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="description">グループの説明</label>
-              <input class="border py-2 px-3 text-grey-darkest" type="text" name="description" id="description" value="{{$group->description}}">
+              <textarea class="border py-2 px-3 text-grey-darkest" rows="5" name="description" id="description">{{$group->description}}</textarea>
             </div>
             <div class="flex flex-col mb-4">
-              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="condition">グループの募集条件</label>
-              <input class="border py-2 px-3 text-grey-darkest" type="text" name="condition" id="condition" value="{{$group->condition}}">
+              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="condition">募集条件</label>
+              <textarea class="border py-2 px-3 text-grey-darkest" rows="5" name="condition" id="condition">{{$group->condition}}</textarea>
             </div>
             <div class="flex flex-col mb-4">
-              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="end_date">グループの解散日</label>
+              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="end_date">活動終了日</label>
               <input class="border py-2 px-3 text-grey-darkest" type="text" name="end_date" id="end_date" value="{{$group->end_date}}">
             </div>
             <div class="flex justify-evenly">

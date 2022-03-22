@@ -23,16 +23,15 @@
               <tr class="hover:bg-grey-lighter">
                 <td class="py-4 px-6 border-b border-grey-light flex">
                   <!-- <img src='' height='150px' alt='sample'>  -->
-                  <a href="{{ route('group.show',$group->id) }}">
-                  
-                   @if ($group->user_id === Auth::user()->id)
-                   <p class="text-left text-red-600">管理しています</p>
-                   @else
-                   <p class="text-left text-grey-dark">管理人：{{$group->user->name}}</p>
-                   @endif
-                    
-                   <h3 class="text-left font-bold text-lg text-grey-dark">{{$group->name}}</h3>
-                  </a>
+                  <div>
+                     @if ($group->user_id === Auth::user()->id)
+                     <p class="text-left text-red-600">管理しています</p>
+                     @else
+                     <p class="text-left text-grey-dark">管理人：{{$group->user->name}}</p>
+                     @endif
+                      
+                     <h3 class="text-left font-bold text-lg text-grey-dark">{{$group->name}}</h3>
+                  </div>
                   
                   <div class="flex">
                     <!-- グループに入室するボタン -->
@@ -40,6 +39,13 @@
                         @csrf
                          <button type="submit" class="ml-4 w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                          入室する
+                         </button>
+                      </form>
+                     <!-- グループに入室するボタン -->
+                      <form class="ml-5" action="{{ route('group.show',$group->id) }}" method="GET" class="text-left">
+                        @csrf
+                         <button type="submit" class="ml-4 w-full bg-transparent hover:bg-orange-500 text-orange-700 font-semibold hover:text-white py-2 px-4 border border-orange-500 hover:border-transparent rounded">
+                         詳細を見る
                          </button>
                       </form>
                   </div>

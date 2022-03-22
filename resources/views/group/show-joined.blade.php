@@ -20,15 +20,11 @@
             </div>
             <div class="flex flex-col mb-4">
               <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">グループの説明</p>
-              <p class="py-2 px-3 text-grey-darkest" id="description">
-                {{$group->description}}
-              </p>
+              <p class="py-2 px-3 text-grey-darkest whitespace-pre-wrap" id="description">{{$group->description}}</p>
             </div>
             <div class="flex flex-col mb-4">
               <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">グループの募集条件</p>
-              <p class="py-2 px-3 text-grey-darkest" id="condition">
-                {{$group->condition}}
-              </p>
+              <p class="py-2 px-3 text-grey-darkest whitespace-pre-wrap" id="condition">{{$group->condition}}</p>
             </div>
             <div class="flex flex-col mb-4">
               <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">グループの活動終了日</p>
@@ -36,19 +32,71 @@
                 {{$group->end_date}}
               </p>
             </div>
-            <div class="flex flex-col mb-4">
-              <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">メンバーの数</p>
-              <p class="py-2 px-3 text-grey-darkest" id="end_date">
-                   {{ $group->users()->count() }}
-              </p>
-            </div>
+            <table class="text-center w-full border-collapse">
+              <thead>
+                <tr>
+                  <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-lg text-grey-dark border-b border-grey-light">グループメンバー（{{ $group->users()->count() }}人）</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($members as $member)
+                <tr class="hover:bg-grey-lighter">
+                  <td class="py-4 px-6 border-b border-grey-light flex">
+                    <h3 class="text-left text-lg text-grey-dark">{{$member->name}}</h3>
+                       <!-- <div class="flex">
+                       退会させるボタン
+                         <form action="{{ route('exit',$group) }}" method="GET" class="text-left">
+                            @method('delete')
+                            @csrf
+                            <button type="submit" class="ml-5 w-full bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+                                 グループを抜けてもらう
+                            </button>
+                          </form>
+                        </div> -->
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
             
-            <p class="w-full text-center bg-blue-500 text-white font-semibold py-2 px-4 border border-blue-500 rounded">
-                すでに参加しています
+             @if ($group->user_id === Auth::user()->id)
+                <!-- 管理者のみ更新ボタン -->
+                <div class="mt-5 flex justify-evenly">
+                  <form action="{{ route('group.edit',$group->id) }}" method="GET" class="text-left">
+                    @csrf
+                    <button type="submit" class="my-5 w-full bg-transparent hover:bg-orange-500 text-orange-700 font-semibold hover:text-white py-2 px-4 border border-orange-500 hover:border-transparent rounded">
+                         グループの情報を更新する
+                    </button>
+                  </form>
+                  <!-- 管理者のみ削除ボタン -->
+                   <form action="{{ route('group.destroy',$group->id) }}" method="POST" class="text-left">
+                    @method('delete')
+                    @csrf
+                    <button type="submit" class="my-5 w-full bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+                         グループを削除する
+                    </button>
+                  </form>
+                </div>
+              @else
+                <div class="flex justify-evenly">
+                  <!-- 参加者のみ退会ボタン -->
+                   <form action="{{ route('exit',$group) }}" method="GET" class="text-left">
+                    @method('delete')
+                    @csrf
+                    <button type="submit" class="my-5 w-full bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+                         グループを抜ける
+                    </button>
+                  </form>
+                </div>
+              @endif
+            
+            
+            <p class="mt-10 w-full text-center bg-blue-500 text-white font-semibold py-2 px-4 border border-blue-500 rounded">
+                参加しています
             </p>
             
             <a href="{{ route('group.index') }}" class="block text-center w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
-              Back
+              グループ一覧へ
             </a>
           </div>
         </div>

@@ -20,11 +20,11 @@
             </div>
             <div class="flex flex-col mb-4">
               <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="description">グループの説明</label>
-              <input class="border py-2 px-3 text-grey-darkest" type="text" name="description" id="description">
+              <textarea class="border py-2 px-3 text-grey-darkest" rows="5" name="description" id="description"></textarea>
             </div>
             <div class="flex flex-col mb-4">
               <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="condition">募集条件</label>
-              <input class="border py-2 px-3 text-grey-darkest" type="text" name="condition" id="condition">
+              <textarea class="border py-2 px-3 text-grey-darkest" rows="5" name="condition" id="condition"></textarea>
             </div>
             <div class="flex flex-col mb-4">
               <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="end_date">活動終了日</label>

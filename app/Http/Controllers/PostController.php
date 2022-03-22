@@ -122,8 +122,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+         $group_id = Post::find($id)->group_id;
          $result = Post::find($id)->delete();
-         return redirect()->route('post.index');
+         return redirect()->route('group.room',$group_id);
     }
     
 

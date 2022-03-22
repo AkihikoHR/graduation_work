@@ -20,36 +20,18 @@
             <tbody>
               @foreach ($groups as $group)
               <tr class="hover:bg-grey-lighter">
-                <td class="py-4 px-6 border-b border-grey-light">
+                <td class="py-4 px-6 border-b border-grey-light flex">
+                  <h3 class="text-left font-bold text-lg text-grey-dark">{{$group->name}}</h3>
 
-                  <a href="{{ route('group.show',$group->id) }}">
-                    <h3 class="text-left font-bold text-lg text-grey-dark">{{$group->name}}</h3>
-                  </a>
-                  
                   <div class="flex">
-              
-                    <!-- 更新ボタン -->
-                     <form action="{{ route('group.edit',$group->id) }}" method="GET" class="text-left">
-                      @csrf
-                      <button type="submit" class="mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-white py-1 px-2 focus:outline-none focus:shadow-outline">
-                        <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="black">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                      </button>
-                    </form>
-                    <!-- 削除ボタン -->
-                     <form action="{{ route('group.destroy',$group->id) }}" method="POST" class="text-left">
-                      @method('delete')
-                      @csrf
-                      <button type="submit" class="mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-white py-1 px-2 focus:outline-none focus:shadow-outline">
-                        <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="black">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                      </button>
-                    </form>
-                    
+                     <!-- グループの詳細を見るボタン -->
+                      <form class="ml-5" action="{{ route('group.show',$group->id) }}" method="GET" class="text-left">
+                        @csrf
+                         <button type="submit" class="ml-4 w-full bg-transparent hover:bg-orange-500 text-orange-700 font-semibold hover:text-white py-2 px-4 border border-orange-500 hover:border-transparent rounded">
+                         詳細を見る
+                         </button>
+                      </form>
                   </div>
-                  
                 </td>
               </tr>
               @endforeach

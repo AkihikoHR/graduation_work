@@ -63,16 +63,16 @@
 
           <x-slot name="content">
             <!-- Authentication -->
-            <form method="GET" action="{{ route('mypage.index') }}">
+            <form method="GET" action="{{ route('profile.index') }}">
               @csrf
-              <x-dropdown-link :href="route('mypage.index')" onclick="event.preventDefault();
+              <x-dropdown-link :href="route('profile.index')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                 {{ __('マイページ') }}
               </x-dropdown-link>
             </form>
-            <form method="GET" action="{{ route('mypage.profile') }}">
+            <form method="GET" action="{{ route('profile.create') }}">
               @csrf
-              <x-dropdown-link :href="route('mypage.profile')" onclick="event.preventDefault();
+              <x-dropdown-link :href="route('profile.create')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                 {{ __('プロフィール登録') }}
               </x-dropdown-link>
@@ -150,16 +150,16 @@
 
       <div class="mt-3 space-y-1">
         <!-- Authentication -->
-        <form method="POST" action="{{ route('mypage.index') }}">
+        <form method="POST" action="{{ route('profile.index') }}">
           @csrf
-          <x-responsive-nav-link :href="route('mypage.index')" onclick="event.preventDefault();
+          <x-responsive-nav-link :href="route('profile.index')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
             {{ __('マイページ') }}
           </x-responsive-nav-link>
         </form>
-        <form method="POST" action="{{ route('mypage.profile') }}">
+        <form method="POST" action="{{ route('profile.create') }}">
           @csrf
-          <x-responsive-nav-link :href="route('mypage.profile')" onclick="event.preventDefault();
+          <x-responsive-nav-link :href="route('profile.create')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
             {{ __('プロフィール登録') }}
           </x-responsive-nav-link>

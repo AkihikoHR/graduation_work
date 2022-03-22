@@ -5,6 +5,7 @@ use App\Http\Controllers\TweetController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Group;
 
 /*
@@ -22,16 +23,14 @@ Route::group(['middleware' => 'auth'], function () {
     
   Route::get('group/{group}/join', [MemberController::class, 'store'])->name('join');
   Route::get('group/{group}/exit', [MemberController::class, 'destroy'])->name('exit');
-  
+ 
   Route::get('/group/mygroup', [GroupController::class, 'mygroup'])->name('group.mygroup');
   Route::get('/group/admin', [GroupController::class, 'admin'])->name('group.admin');
   Route::get('/group/{group}/room', [GroupController::class, 'room'])->name('group.room');
   
   Route::resource('group', GroupController::class);
   Route::resource('post', PostController::class);
-  
-  Route::get('/mypage/index', function(){return view('mypage.index');})->name('mypage.index');
-  Route::get('/mypage/profile', function(){return view('mypage.profile');})->name('mypage.profile');
+  Route::resource('profile', ProfileController::class);
   
 });
 

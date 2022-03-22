@@ -20,15 +20,11 @@
             </div>
             <div class="flex flex-col mb-4">
               <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">グループの説明</p>
-              <p class="py-2 px-3 text-grey-darkest" id="description">
-                {{$group->description}}
-              </p>
+              <p class="py-2 px-3 text-grey-darkest whitespace-pre-wrap" id="description">{{$group->description}}</p>
             </div>
             <div class="flex flex-col mb-4">
               <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">グループの募集条件</p>
-              <p class="py-2 px-3 text-grey-darkest" id="condition">
-                {{$group->condition}}
-              </p>
+              <p class="py-2 px-3 text-grey-darkest whitespace-pre-wrap" id="condition">{{$group->condition}}</p>
             </div>
             <div class="flex flex-col mb-4">
               <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">グループの活動終了日</p>
@@ -51,7 +47,7 @@
             </form>
             
             <a href="{{ route('group.index') }}" class="block text-center w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
-              Back
+              グループ一覧へ
             </a>
           </div>
         </div>

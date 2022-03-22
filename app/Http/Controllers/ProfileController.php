@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Group;
-use App\Models\User;
-use Auth;
+use Validator;
+use App\Models\Profile;
 
-class MemberController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,9 @@ class MemberController extends Controller
      */
     public function index()
     {
-     //
+        return view('profile.index', [
+       'profiles' => []
+       ]);
     }
 
     /**
@@ -26,7 +27,7 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        return view('profile.create');
     }
 
     /**
@@ -35,10 +36,29 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Group $group)
+    public function store(Request $request)
     {
-        $group->users()->attach(Auth::id());
-        return redirect()->route('group.mygroup');
+        // バリデーション
+        $validator = Validator::make($request->all(), [
+         'nickname' => 'required | max:100',
+         'birthday' => 'required',
+         'school' => 'required',
+         'grade' => 'required',
+         'pref' => 'required',
+         'image' => 'required',
+          ]);
+          // バリデーション:エラー
+          if ($validator->fails()) {
+            return redirect()
+              ->route('tweet.create')
+              ->withInput()
+              ->withErrors($validator);
+          }
+          // create()は最初から用意されている関数
+          // 戻り値は挿入されたレコードの情報
+          $result = Tweet::create($request->all());
+          // ルーティング「todo.index」にリクエスト送信（一覧ページに移動）
+          return redirect()->route('tweet.index');
     }
 
     /**
@@ -81,19 +101,8 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Group $group)
+    public function destroy($id)
     {
-          $group->users()->detach(Auth::id());
-          return redirect()->route('group.mygroup');
+        //
     }
-    
-     public function bye($group)
-    {
-          dd($group);
-          dd(User::$member->groups);
-          dd(Group::find($group)->users);
-          $group->users()->detach($member);
-          return redirect()->route('group.mygroup');
-    }
-    
 }

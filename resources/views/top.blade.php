@@ -28,7 +28,7 @@
                           <table class="text-center w-full border-collapse">
                             <thead>
                               <tr>
-                                <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-lg text-grey-dark border-b border-grey-light">募集中のグループ</th>
+                                <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-lg text-grey-dark border-b border-grey-light">活動中のグループ</th>
                               </tr>
                             </thead>
                             <tbody>

@@ -79,9 +79,9 @@ class GroupController extends Controller
          $data = $members->where('id',Auth::user()->id)->first();
          
          if ($data === null){
-             return view('group.show', ['group' => $group]);
+             return view('group.show', ['group' => $group, 'members' => $members]);
          } else {
-             return view('group.show-joined', ['group' => $group]); 
+             return view('group.show-joined', ['group' => $group, 'members' => $members]); 
          }
     }
 
@@ -139,25 +139,24 @@ class GroupController extends Controller
     
     public function admin()
     {
-    // Userモデルに定義した関数を実行する．
-    $user_id = Auth::user()->id;
-    $groups = User::find($user_id)->admin;
-    
-    return view('group.admin', [
-      'groups' => $groups
-      ]);
+        // Userモデルに定義した関数を実行する．
+        $user_id = Auth::user()->id;
+        $groups = User::find($user_id)->admin;
+        
+        return view('group.admin', [
+          'groups' => $groups
+          ]);
     }
     
     public function mygroup()
     {
-    // Userモデルに定義した関数を実行する．
-    $user_id = Auth::user()->id;
-    $groups = User::find($user_id)->mygroups;
-
-      return view('group.mygroup', [
-      'groups' => $groups
-      ]);
+        // Userモデルに定義した関数を実行する．
+        $user_id = Auth::user()->id;
+        $groups = User::find($user_id)->mygroups;
     
+          return view('group.mygroup', [
+          'groups' => $groups
+          ]);
     }
     
     public function room($id)
