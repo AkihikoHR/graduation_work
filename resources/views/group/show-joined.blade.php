@@ -43,16 +43,19 @@
                 <tr class="hover:bg-grey-lighter">
                   <td class="py-4 px-6 border-b border-grey-light flex">
                     <h3 class="text-left text-lg text-grey-dark">{{$member->name}}</h3>
-                       <!-- <div class="flex">
-                       退会させるボタン
-                         <form action="{{ route('exit',$group) }}" method="GET" class="text-left">
-                            @method('delete')
-                            @csrf
-                            <button type="submit" class="ml-5 w-full bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
-                                 グループを抜けてもらう
-                            </button>
-                          </form>
-                        </div> -->
+ 
+                    @if ($group->user_id === Auth::user()->id && $member->id !== Auth::user()->id)
+                    <div class="flex">
+                    <!-- 退会させるボタン -->
+                       <form action="{{ route('bye',$group) }}" method="POST" class="text-left">
+                          @csrf
+                          <input type="hidden" name="member" value="{{$member->id}}">
+                          <button type="submit" class="ml-5 w-full bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+                               グループを抜けてもらう
+                          </button>
+                        </form>
+                    </div>
+                    @endif
                   </td>
                 </tr>
                 @endforeach

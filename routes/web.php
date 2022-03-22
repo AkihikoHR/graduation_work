@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
     
   Route::get('group/{group}/join', [MemberController::class, 'store'])->name('join');
   Route::get('group/{group}/exit', [MemberController::class, 'destroy'])->name('exit');
+  Route::post('group/{group}/bye', [MemberController::class, 'bye'])->name('bye');
  
   Route::get('/group/mygroup', [GroupController::class, 'mygroup'])->name('group.mygroup');
   Route::get('/group/admin', [GroupController::class, 'admin'])->name('group.admin');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Models\User;
+use App\Models\Member;
 use Auth;
 
 class MemberController extends Controller
@@ -87,12 +88,10 @@ class MemberController extends Controller
           return redirect()->route('group.mygroup');
     }
     
-     public function bye($group)
+     public function bye(Request $request, $group)
     {
-          dd($group);
-          dd(User::$member->groups);
-          dd(Group::find($group)->users);
-          $group->users()->detach($member);
+          $member = $request->input('member');
+          Group::find($group)->users()->detach($member);
           return redirect()->route('group.mygroup');
     }
     
