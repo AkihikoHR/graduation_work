@@ -1,7 +1,9 @@
+<!-- resources/views/profile/edit.blade.php -->
+
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ __('プロフィール登録') }}
+      {{ __('プロフィール更新') }}
     </h2>
   </x-slot>
 
@@ -10,25 +12,26 @@
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
           @include('common.errors')
-          <form class="mb-6" action="{{ route('profile.store') }}" method="POST" enctype="multipart/form-data">
+          <form class="mb-6" action="{{ route('profile.update',$profile->id) }}" method="POST">
+            @method('put')
             @csrf
             <div class="flex flex-col mb-4">
               <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="nickname">ニックネーム</label>
               <p>※設定しない場合はユーザー登録時の名前が使用されます</p>
-              <input class="border py-2 px-3 text-grey-darkest" type="text" name="nickname" id="nickname">
+              <input class="border py-2 px-3 text-grey-darkest" type="text" name="nickname" id="nickname" value="{{$profile->nickname}}">
             </div>
             <div class="flex flex-col mb-4">
               <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="birthday">生年月日<span class="text-red-400">（非公開）</span></label>
-              <input class="border py-2 px-3 text-grey-darkest" type="date" name="birthday" id="birthday">
+              <input class="border py-2 px-3 text-grey-darkest" type="date" name="birthday" id="birthday" value="{{$profile->birthday}}">
             </div>
             <div class="flex flex-col mb-4">
               <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="school">学校名<span class="text-red-400">（非公開）</span></label>
-              <input class="border py-2 px-3 text-grey-darkest" type="text" name="school" id="school">
+              <input class="border py-2 px-3 text-grey-darkest" type="text" name="school" id="school" value="{{$profile->school}}">
             </div>
             <div class="flex flex-col mb-4">
               <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="grade">現在の学年</label>
               <select name="grade" id="grade">
-                <option value="" selected>学年</option>
+                <option value="{{$profile->grade}}" selected>{{$profile->grade}}</option>
                 <option value="中学1年生">中学1年生</option>
                 <option value="中学2年生">中学2年生</option>
                 <option value="中学3年生">中学3年生</option>
@@ -44,8 +47,8 @@
             </div>
             <div class="flex flex-col mb-4">
               <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="pref">お住まいの都道府県（公開されます）</label>
-              <select name="pref">
-                <option value="" selected>都道府県</option>
+              <select name="pref" id="pref">
+                <option value="{{$profile->pref}}" selected>{{$profile->pref}}</option>
                 <option value="北海道">北海道</option>
                 <option value="青森県">青森県</option>
                 <option value="岩手県">岩手県</option>
@@ -96,11 +99,11 @@
                 <option value="その他">その他</option>
               </select>
             </div>
-            
+  
             <p class="mt-10 text-center font-bold text-red-600">※非公開以外の内容は全員に公開されます</p>
 
             <button type="submit" class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
-              プロフィールを登録する
+              更新する
             </button>
           </form>
         </div>

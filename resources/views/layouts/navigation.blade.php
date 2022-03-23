@@ -63,9 +63,9 @@
 
           <x-slot name="content">
             <!-- Authentication -->
-            <form method="GET" action="{{ route('profile.index') }}">
+            <form method="GET" action="{{ route('profile.show',Auth::user()->id) }}">
               @csrf
-              <x-dropdown-link :href="route('profile.index')" onclick="event.preventDefault();
+              <x-dropdown-link :href="route('profile.show',Auth::user()->id)" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                 {{ __('マイページ') }}
               </x-dropdown-link>
@@ -150,9 +150,9 @@
 
       <div class="mt-3 space-y-1">
         <!-- Authentication -->
-        <form method="POST" action="{{ route('profile.index') }}">
+        <form method="GET" action="{{ route('profile.show',Auth::user()->id) }}">
           @csrf
-          <x-responsive-nav-link :href="route('profile.index')" onclick="event.preventDefault();
+          <x-responsive-nav-link :href="route('profile.show',Auth::user()->id)" onclick="event.preventDefault();
                                         this.closest('form').submit();">
             {{ __('マイページ') }}
           </x-responsive-nav-link>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Profile;
+use App\Models\User;
+use Auth;
 
 class ProfileController extends Controller
 {
@@ -45,20 +47,20 @@ class ProfileController extends Controller
          'school' => 'required',
          'grade' => 'required',
          'pref' => 'required',
-         'image' => 'required',
           ]);
           // バリデーション:エラー
           if ($validator->fails()) {
             return redirect()
-              ->route('tweet.create')
+              ->route('profile.create')
               ->withInput()
               ->withErrors($validator);
           }
           // create()は最初から用意されている関数
           // 戻り値は挿入されたレコードの情報
-          $result = Tweet::create($request->all());
-          // ルーティング「todo.index」にリクエスト送信（一覧ページに移動）
-          return redirect()->route('tweet.index');
+          $profile = Auth::user()->id;
+          $data = $request->merge(['user_id' => $profile])->all();
+          $result = Profile::create($data);
+          return redirect()->route('profile.show', ['profile' => $profile]);
     }
 
     /**
@@ -69,7 +71,9 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+         $profile = Profile::myprofile($id);
+         $user = User::find($id);
+         return view('profile.show', ['profile' => $profile, 'user' => $user]);
     }
 
     /**
@@ -80,7 +84,8 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        //
+         $profile = Profile::find($id);
+         return view('profile.edit', ['profile' => $profile]);
     }
 
     /**
@@ -92,7 +97,29 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+     
+        // バリデーション
+        $validator = Validator::make($request->all(), [
+         'nickname' => 'required | max:100',
+         'birthday' => 'required',
+         'school' => 'required',
+         'grade' => 'required',
+         'pref' => 'required',
+          ]);
+          // バリデーション:エラー
+          if ($validator->fails()) {
+            return redirect()
+              ->route('profile.edit', $id)
+              ->withInput()
+              ->withErrors($validator);
+          }
+          // create()は最初から用意されている関数
+          // 戻り値は挿入されたレコードの情報
+          $result = Profile::find($id)->update($request->all());
+          $profile = Profile::myprofile($id);
+          $user_id = $profile->user_id;
+          $user = User::find($user_id);
+          return view('profile.show', ['profile' => $profile, 'user' => $user]);
     }
 
     /**
